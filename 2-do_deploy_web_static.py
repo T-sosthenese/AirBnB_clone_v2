@@ -17,15 +17,8 @@ def do_deploy(archive_path):
     """
     if not os.path.isdir("versions"):
         os.mkdir("versions")
-        cur_time = datetime.now()
-        output = "versions/web_static_{}{}{}{}{}{}.tgz".format(
-            cur_time.year,
-            cur_time.month,
-            cur_time.day,
-            cur_time.hour,
-            cur_time.minute,
-            cur_time.second
-        )
+        output = ("versions/web_static_{}.tgz"
+                  .format(datetime.strftime(datetime.now(), "%Y%m%d%H%M%S")))
         try:
             print("Packing web_static to {}".format(output))
             local("tar -cvzf {} web_static".format(output))
