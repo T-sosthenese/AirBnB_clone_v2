@@ -20,7 +20,7 @@ def hello():
 @app.route("/hbnb", strict_slashes=False)
 def hbnb():
     """Returns hbnb when queried at hbnb"""
-    return ("hbnb")
+    return ("HBNB")
 
 
 if __name__ == '__main__':
