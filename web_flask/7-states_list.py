@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """"
-Importing Flask to run our hbnb web app.
+Importing Flask to run our hbnb web app
 """
 from flask import Flask, render_template
 from models import storage
