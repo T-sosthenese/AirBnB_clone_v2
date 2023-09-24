@@ -16,7 +16,7 @@ def display_states():
     Renders states_list htmf to display states created.
     """
     path = '7-states_list.html'
-    states = staorage.all(State)
+    states = storage.all(State)
     s = sorted(states.values(), key=lambda state: state.name)
     return render_template(path, s=s)
 
