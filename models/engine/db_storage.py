@@ -12,7 +12,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import os
+from os import getenv
 
 
 classes = {"User": User, "State": State, "City": City,
@@ -25,16 +25,20 @@ class DBStorage:
     __session = None
 
     def __init__(self):
-        """Initializes our objects."""
-        user = os.getenv('HBNB_MYSQL_USER')
-        passwd = os.getenv('HBNB_MYSQL_PWD')
-        host = os.getenv('HBNB_MYSQL_HOST')
-        database = os.getenv('HBNB_MYSQL_DB')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(user, passwd, host, database),
-                                      pool_pre_ping=True
-                                      )
-        if os.getenv('HBNB_ENV') == 'test':
+        """Instantiation of the db storage."""
+        HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
+        HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
+        HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
+        HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
+        HBNB_ENV = getenv('HBNB_ENV')
+        self.__engine = create_engine(
+            'mysql+mysqldb://{}:{}@{}/{}'.format(
+                                           HBNB_MYSQL_USER,
+                                           HBNB_MYSQL_PWD,
+                                           HBNB_MYSQL_HOST,
+                                           HBNB_MYSQL_DB,
+                                        ), pool_pre_ping=True)
+        if HBNB_ENV == 'test':
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
