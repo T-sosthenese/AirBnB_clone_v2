@@ -1,4 +1,4 @@
-#!/usr/bi/python3
+#!/usr/bin/python3
 """
 Implementation of a  database storage engine.
 """
@@ -25,7 +25,7 @@ class DBStorage:
     __session = None
 
     def __init__(self):
-        """Instantiation of the db storage."""
+        """Instantiation of the db storage"""
         HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
         HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
