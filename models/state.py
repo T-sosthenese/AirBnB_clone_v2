@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """ State Module for HBNB project."""
-import models
+from models import storage_type
 from models.base_model import BaseModel, Base
-from os import getenv
-import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from models.city import City
+from os import getenv
 
 
 class State(BaseModel, Base):
@@ -14,22 +14,19 @@ class State(BaseModel, Base):
         __tablename__ = 'states'
         name = Column(String(128),
                       nullable=False)
-        cities = relationship("City", cascade="all, delete",
-                              backref="states")
+        cities = relationship("City", cascade="all, delete, delete-orphan",
+                              backref="state")
     else:
         name = ""
 
-    def __init__(self, *args, **kwargs):
-        """Initializes our state class."""
-        super().__init__(*args, **kwargs)
-
-    if getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def cities(self):
-            """A getter for cities."""
-            values_city = models.storage.all("City").values()
-            list_city = []
-            for city in values_city:
+            """ Returns the number of cities where the given
+            state_id is equal to the current state_id."""
+            from models import storage
+            cities_related = []
+            cities = storage.all(City)
+            for city in cities.values():
                 if city.state_id == self.id:
-                    list_city.append(city)
-            return list_city
+                    cities_related.append(city)
+            return cities_related
