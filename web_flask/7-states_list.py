@@ -15,15 +15,20 @@ def display_states():
     """
     Renders states_list htmf to display states created.
     """
-    states = storage.all()
-    return render_template('7-states_list.html', states=states)
+    path = '7-states_list.html'
+    states = staorage.all(State)
+    s = sorted(states.values(), key=lambda state: state.name)
+    return render_template(path, s=s)
 
 
 @app.teardown_appcontext
-def teardown(self):
-    """ Removes current sqlalchemy session."""
+def teardown(exception_object):
+    """
+    Used for cleaning up resources or performing actions after
+    a request has been processed.
+    """
     storage.close()
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host="0.0.0.0")
